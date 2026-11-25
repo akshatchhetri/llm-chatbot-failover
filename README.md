@@ -3,9 +3,9 @@
 React + FastAPI + SQLite, with LiteLLM handling the key pool and response cache.
 
 ## 1. Live URLs
-- Frontend: `<your frontend URL>`
-- Backend: `<your backend URL>` (try `/health`)
-- Repo: `<your GitHub URL>`
+- Frontend: https://llm-chatbot-failover.vercel.app
+- Backend: https://llm-chatbot-failover.onrender.com (try `/health`)
+- Repo: https://github.com/akshatchhetri/llm-chatbot-failover
 
 ## 2. Run locally
 **With Docker**
@@ -48,13 +48,16 @@ curl -s $B/sessions/a1/messages
 In the UI, open "Session settings" and type `key_1=429` in the simulate field to demo failover. Input and output tokens show beside every reply.
 
 ## 5. Setup Used
-Editor: `<your editor>`. AI tools: Claude (scaffolding, review), LiteLLM docs.
+Editor: VS Code. AI tools: Claude (scaffolding, debugging, review), LiteLLM docs.
 
 ## 6. Bonus features
 - System prompt field per session.
 - UI field for `X-Simulate-Failure` to demo failover without curl.
 - Optional disk cache (`CACHE_TYPE=disk`).
 
-## Deploying
-- **Backend (Render, Docker):** root dir `backend`, set `LLM_API_KEYS`, `LLM_MODEL`, `ALLOWED_ORIGINS=<frontend URL>`, `ENABLE_FAILURE_SIMULATION=true`. Add a disk at `/data` if your plan allows it, otherwise history resets on redeploy.
+## Deploying (what I used)
+Backend on Render (Docker, free plan, health check `/health`, model `gemini/gemini-3.5-flash-lite`); frontend on Vercel (Vite, root `frontend`, `VITE_API_URL` set to the Render URL). The free Render instance sleeps when idle, so the first request can take up to a minute.
+
+### Steps
+- **Backend (Render, Docker):** root dir `backend`, set `LLM_API_KEYS`, `LLM_MODEL`, `ALLOWED_ORIGINS=<frontend URL>`, `ENABLE_FAILURE_SIMULATION=true`. The free Render plan has no persistent disk, so the SQLite file resets when the service restarts or redeploys. Docker locally keeps history on the `appdata` volume. Add a disk mounted at `/data` on a paid plan to persist history.
 - **Frontend (Vercel/Netlify):** root dir `frontend`, build `npm run build`, output `dist`, env `VITE_API_URL=<backend URL>`.
