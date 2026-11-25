@@ -1,0 +1,27 @@
+:root { --ink:#1b2430; --paper:#f4f6f8; --card:#fff; --line:#d9dee5; --live:#9a5b00; --cache:#0b6e5f; --err:#a4262c; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.5 "Segoe UI", system-ui, sans-serif; }
+.app { max-width:760px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; padding:0 16px; }
+header { display:flex; justify-content:space-between; align-items:baseline; padding:20px 0 8px; }
+h1 { font-size:1.35rem; margin:0; letter-spacing:-.01em; }
+header code { color:#5b6776; font-size:.85rem; }
+.settings { border:1px solid var(--line); border-radius:6px; background:var(--card); padding:8px 12px; margin-bottom:8px; }
+.settings summary { cursor:pointer; font-weight:600; }
+.settings label { display:block; margin-top:10px; font-size:.9rem; }
+textarea, input { width:100%; font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:6px; background:#fff; color:inherit; }
+textarea:focus-visible, input:focus-visible, button:focus-visible, summary:focus-visible { outline:2px solid var(--cache); outline-offset:2px; }
+.thread { flex:1; padding:8px 0 16px; display:flex; flex-direction:column; gap:12px; }
+.empty { color:#5b6776; font-size:.95rem; }
+.msg { max-width:88%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); background:var(--card); }
+.msg p { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.msg.user { align-self:flex-end; background:var(--ink); color:#fff; border-color:var(--ink); }
+.msg.error { align-self:stretch; max-width:100%; border-color:var(--err); color:var(--err); background:#fdf1f1; }
+.meta { display:flex; flex-wrap:wrap; gap:4px 14px; margin:10px 0 0; padding-top:8px; border-top:1px solid var(--line); font-size:.8rem; }
+.meta div { display:flex; gap:5px; }
+.meta dt { color:#5b6776; } .meta dd { margin:0; font-variant-numeric:tabular-nums; font-weight:600; }
+dd.live { color:var(--live); } dd.cache { color:var(--cache); }
+footer { position:sticky; bottom:0; display:flex; gap:8px; padding:12px 0 20px; background:linear-gradient(transparent, var(--paper) 25%); }
+footer textarea { resize:none; }
+button { font:inherit; font-weight:600; padding:0 22px; border:0; border-radius:6px; background:var(--cache); color:#fff; cursor:pointer; }
+button:disabled { opacity:.5; cursor:default; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior:auto !important; } }
